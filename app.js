@@ -23,8 +23,8 @@ app.use(function (req, res, next) {
 });
 
 mongoose.connect(dbURI).then(() => {
-  app.listen(process.env.API_URL || 3000, () => {
-    console.log('listening to port', process.env.API_URL || 3000)
+  app.listen(process.env.PORT || 3000, () => {
+    console.log('listening to port', process.env.PORT || 3000)
   })
 }).catch(err => {
   console.error(err.message)
