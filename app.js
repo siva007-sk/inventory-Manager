@@ -1,14 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const inventoryRouter = require('./Routes/inventoryRoutes');
+const usersRouter = require('./Routes/userRoutes');
 
-var inventoryRouter = require('./routes/inventoryRoutes');
-var usersRouter = require('./routes/userRoutes');
+const app = express();
 
-var app = express();
-
-
+const dbURI = 'mongodb+srv://Sk-patro:Violet%400240@sivacluster.lmzwugn.mongodb.net/inventoryManager'
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,8 +18,16 @@ app.use('/inventory', inventoryRouter);
 app.use('/user', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
+
+mongoose.connect(dbURI).then(() => {
+  app.listen(process.env.API_URL || 3000, () => {
+    console.log('listening to port', process.env.API_URL || 3000)
+  })
+}).catch(err => {
+  console.error(err.message)
+})
 
 module.exports = app;
