@@ -5,7 +5,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const inventoryRouter = require('./Routes/inventoryRoutes');
 const usersRouter = require('./Routes/userRoutes');
-
+const cors=require('cors')
 const app = express();
 
 const dbURI = 'mongodb+srv://Sk-patro:Violet%400240@sivacluster.lmzwugn.mongodb.net/inventoryManager'
@@ -13,6 +13,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors())
 
 app.use('/inventory', inventoryRouter);
 app.use('/user', usersRouter);
